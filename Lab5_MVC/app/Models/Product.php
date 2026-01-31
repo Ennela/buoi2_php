@@ -4,13 +4,13 @@ namespace App\Models;
 
 class Product extends BaseModel
 {
-    public function getAllProducts(): array
+    public function all(): array
     {
         $stmt = $this->pdo->query("SELECT * FROM products ORDER BY id DESC");
         return $stmt->fetchAll();
     }
 
-    public function getProductById(int $id): ?array
+    public function find(int $id): ?array
     {
         $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = ?");
         $stmt->execute([$id]);
@@ -18,21 +18,43 @@ class Product extends BaseModel
         return $product ?: null;
     }
 
-    public function addProduct(string $name, float $price, string $description = ''): bool
+    public function insert(array $data): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO products (name, price, description) VALUES (?, ?, ?)");
-        return $stmt->execute([$name, $price, $description]);
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO products (name, price, description, image) VALUES (:name, :price, :description, :image)"
+        );
+        return $stmt->execute([
+            ':name' => $data['name'],
+            ':price' => $data['price'],
+            ':description' => $data['description'] ?? '',
+            ':image' => $data['image'] ?? ''
+        ]);
     }
 
-    public function updateProduct(int $id, string $name, float $price, string $description = ''): bool
+    public function update(int $id, array $data): bool
     {
-        $stmt = $this->pdo->prepare("UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?");
-        return $stmt->execute([$name, $price, $description, $id]);
+        $stmt = $this->pdo->prepare(
+            "UPDATE products SET name = :name, price = :price, description = :description, image = :image WHERE id = :id"
+        );
+        return $stmt->execute([
+            ':id' => $id,
+            ':name' => $data['name'],
+            ':price' => $data['price'],
+            ':description' => $data['description'] ?? '',
+            ':image' => $data['image'] ?? ''
+        ]);
     }
 
-    public function deleteProduct(int $id): bool
+    public function delete(int $id): bool
     {
         $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
         return $stmt->execute([$id]);
+    }
+
+    public function search(string $keyword): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE name LIKE :keyword ORDER BY id DESC");
+        $stmt->execute([':keyword' => '%' . $keyword . '%']);
+        return $stmt->fetchAll();
     }
 }

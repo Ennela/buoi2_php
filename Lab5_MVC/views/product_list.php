@@ -1,274 +1,137 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php $pageTitle = 'Danh Sách Sản Phẩm - Lab5 MVC'; ?>
+<?php include __DIR__ . '/layouts/header.php'; ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Sản Phẩm - Lab5 MVC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<div class="page-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+    <div class="mb-3 mb-md-0">
+        <h1 class="page-title">Danh Sách Sản Phẩm</h1>
+        <p class="page-subtitle">
+            <?php if (!empty($isSearch)): ?>
+                Kết quả tìm kiếm cho: "<strong><?php echo htmlspecialchars($keyword ?? ''); ?></strong>"
+                (<?php echo count($products); ?> sản phẩm)
+            <?php else: ?>
+                Quản lý tất cả sản phẩm trong hệ thống
+            <?php endif; ?>
+        </p>
+    </div>
+    <a href="index.php?page=product-add" class="btn btn-primary">Thêm Sản Phẩm</a>
+</div>
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
-            min-height: 100vh;
-            color: #fff;
-            padding: 40px 20px;
-        }
+<?php if (!empty($_SESSION['success'])): ?>
+    <div class="alert alert-success fade-in d-flex align-items-center" role="alert">
+        <?php echo $_SESSION['success'];
+        unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+<?php if (!empty($_SESSION['error'])): ?>
+    <div class="alert alert-danger fade-in d-flex align-items-center" role="alert">
+        <?php echo $_SESSION['error'];
+        unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: fadeDown 0.6s ease-out;
-        }
+<div class="card mb-4 fade-in">
+    <div class="card-body py-3">
+        <form action="index.php" method="GET" class="row g-3 align-items-center">
+            <input type="hidden" name="page" value="product-search">
+            <div class="col-md-8 col-lg-9">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0"
+                        style="border-color: var(--border-color);"></span>
+                    <input type="text" name="keyword" class="form-control border-start-0"
+                        placeholder="Tìm kiếm sản phẩm theo tên..."
+                        value="<?php echo htmlspecialchars($_GET['keyword'] ?? ''); ?>">
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-grow-1">Tìm kiếm</button>
+                <?php if (!empty($isSearch)): ?>
+                    <a href="index.php?page=products" class="btn btn-outline-light">X</a>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+</div>
 
-        @keyframes fadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #fff;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        .product-card {
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            border: 1px solid #2a2a2a;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            animation: scaleIn 0.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        .product-card:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .product-card:nth-child(2) {
-            animation-delay: 0.15s;
-        }
-
-        .product-card:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-
-        .product-card:nth-child(4) {
-            animation-delay: 0.25s;
-        }
-
-        .product-card:nth-child(5) {
-            animation-delay: 0.3s;
-        }
-
-        .product-card:nth-child(6) {
-            animation-delay: 0.35s;
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: #3498db;
-            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.15);
-        }
-
-        .product-image {
-            height: 180px;
-            background-color: #252525;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            position: relative;
-        }
-
-        .product-image::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 4px;
-            background-color: #3498db;
-            border-radius: 4px 4px 0 0;
-        }
-
-        .product-content {
-            padding: 28px;
-        }
-
-        .product-name {
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #fff;
-        }
-
-        .product-description {
-            font-size: 0.95rem;
-            color: #777;
-            margin-bottom: 18px;
-            line-height: 1.6;
-        }
-
-        .product-price {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #3498db;
-        }
-
-        .product-id {
-            font-size: 0.8rem;
-            color: #555;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #2a2a2a;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 80px 40px;
-            background-color: #1a1a1a;
-            border-radius: 24px;
-            border: 2px dashed #2a2a2a;
-        }
-
-        .empty-state .icon {
-            font-size: 4rem;
-            margin-bottom: 25px;
-            opacity: 0.4;
-        }
-
-        .empty-state h2 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            color: #666;
-        }
-
-        .empty-state p {
-            color: #555;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            padding: 14px 28px;
-            background-color: #1a1a1a;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid #2a2a2a;
-        }
-
-        .nav-links a:hover {
-            background-color: #3498db;
-            border-color: #3498db;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.25);
-        }
-
-        .nav-links a.primary {
-            background-color: #3498db;
-            border-color: #3498db;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <header>
-
-            <h1>Danh Sách Sản Phẩm</h1>
-            <p class="subtitle">Dữ liệu được lấy từ Database (Lab 2)</p>
-        </header>
-
+<div class="card fade-in">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Bảng Sản Phẩm</h5>
+        <span class="badge bg-primary"><?php echo count($products); ?> sản phẩm</span>
+    </div>
+    <div class="card-body p-0">
         <?php if (!empty($products)): ?>
-            <div class="products-grid">
-                <?php foreach ($products as $product): ?>
-                    <div class="product-card">
-                        <div class="product-image"></div>
-                        <div class="product-content">
-                            <h3 class="product-name">
-                                <?php echo htmlspecialchars($product['name']); ?>
-                            </h3>
-                            <p class="product-description">
-                                <?php echo htmlspecialchars($product['description'] ?? 'Không có mô tả'); ?>
-                            </p>
-                            <div class="product-price">
-                                <?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ
-                            </div>
-                            <div class="product-id">ID: #<?php echo $product['id']; ?></div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">ID</th>
+                            <th style="width: 80px;">Hình</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mô tả</th>
+                            <th style="width: 150px;">Giá</th>
+                            <th style="width: 180px;" class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($products as $product): ?>
+                            <tr>
+                                <td>
+                                    <span class="badge bg-secondary">#<?php echo $product['id']; ?></span>
+                                </td>
+                                <td>
+                                    <?php if (!empty($product['image'])): ?>
+                                        <img src="<?php echo htmlspecialchars($product['image']); ?>"
+                                            alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-img">
+                                    <?php else: ?>
+                                        <div class="product-img-placeholder">-</div>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <strong><?php echo htmlspecialchars($product['name']); ?></strong>
+                                </td>
+                                <td>
+                                    <span class="text-secondary">
+                                        <?php
+                                        $desc = $product['description'] ?? '';
+                                        echo htmlspecialchars(strlen($desc) > 50 ? substr($desc, 0, 50) . '...' : $desc);
+                                        ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="price">
+                                        <?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a href="index.php?page=product-detail&id=<?php echo $product['id']; ?>"
+                                            class="btn btn-sm btn-outline-light" title="Xem chi tiết">Xem</a>
+                                        <a href="index.php?page=product-edit&id=<?php echo $product['id']; ?>"
+                                            class="btn btn-sm btn-warning" title="Sửa">Sửa</a>
+                                        <a href="index.php?page=product-delete&id=<?php echo $product['id']; ?>"
+                                            class="btn btn-sm btn-danger" title="Xóa"
+                                            onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         <?php else: ?>
             <div class="empty-state">
-
-                <h2>Chưa có sản phẩm nào</h2>
-                <p>Hãy thêm sản phẩm vào bảng products trong database buoi2_php</p>
+                <h3>Không có sản phẩm nào</h3>
+                <p>
+                    <?php if (!empty($isSearch)): ?>
+                        Không tìm thấy sản phẩm phù hợp với từ khóa tìm kiếm.
+                    <?php else: ?>
+                        Hãy thêm sản phẩm mới để bắt đầu quản lý.
+                    <?php endif; ?>
+                </p>
+                <a href="index.php?page=product-add" class="btn btn-primary mt-3">Thêm Sản Phẩm Đầu Tiên</a>
             </div>
         <?php endif; ?>
-
-        <div class="nav-links">
-            <a href="index.php?page=home">Trang Chủ</a>
-            <a href="index.php?page=faker">Faker Demo</a>
-            <a href="index.php?page=products" class="primary">Làm Mới</a>
-        </div>
     </div>
-</body>
+</div>
 
-</html>
+<?php include __DIR__ . '/layouts/footer.php'; ?>
