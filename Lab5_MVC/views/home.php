@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background-color: #0f0f0f;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,13 +25,12 @@
 
         .container {
             text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            padding: 50px;
+            background-color: #1a1a1a;
+            border-radius: 24px;
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            max-width: 650px;
             animation: fadeIn 0.8s ease-out;
         }
 
@@ -47,36 +46,41 @@
             }
         }
 
+
+
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #e94560, #f39c12, #9b59b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 15px;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .accent {
+            color: #e94560;
         }
 
         .message {
-            font-size: 1.3rem;
-            color: #f0f0f0;
-            margin-bottom: 25px;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.7;
         }
 
         .student-info {
-            background: linear-gradient(135deg, #e94560, #9b59b6);
-            padding: 20px 30px;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            background-color: #e94560;
+            padding: 22px 35px;
+            border-radius: 16px;
+            font-size: 1.15rem;
             font-weight: 500;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
-            transition: transform 0.3s ease;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .student-info:hover {
             transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(233, 69, 96, 0.35);
         }
 
         .nav-links {
@@ -88,25 +92,26 @@
 
         .nav-links a {
             display: inline-block;
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            background-color: #252525;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 500;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #333;
         }
 
         .nav-links a:hover {
-            background: rgba(233, 69, 96, 0.5);
+            background-color: #e94560;
             border-color: #e94560;
             transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3);
         }
 
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .nav-links a.active {
+            background-color: #e94560;
+            border-color: #e94560;
         }
     </style>
 </head>
@@ -114,7 +119,7 @@
 <body>
     <div class="container">
 
-        <h1>Lab5 - Mini MVC</h1>
+        <h1>Lab5 <span class="accent">Mini MVC</span></h1>
         <p class="message">
             <?php echo htmlspecialchars($message); ?>
         </p>
@@ -124,7 +129,7 @@
         </div>
 
         <div class="nav-links">
-            <a href="index.php?page=home">Trang Chủ</a>
+            <a href="index.php?page=home" class="active">Trang Chủ</a>
             <a href="index.php?page=faker">Faker Demo</a>
             <a href="index.php?page=products">Sản Phẩm</a>
         </div>

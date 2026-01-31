@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background-color: #0f0f0f;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,11 +27,10 @@
         .container {
             text-align: center;
             padding: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
+            background-color: #1a1a1a;
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
             max-width: 700px;
             width: 100%;
             animation: slideUp 0.6s ease-out;
@@ -49,36 +48,48 @@
             }
         }
 
+
+
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(90deg, #f093fb, #f5576c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
             font-size: 1rem;
-            color: #888;
-            margin-bottom: 35px;
+            color: #666;
+            margin-bottom: 40px;
         }
 
         .fake-data {
             text-align: left;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .data-card {
-            background: rgba(255, 255, 255, 0.08);
+            background-color: #222;
             border-radius: 16px;
-            padding: 25px;
+            padding: 25px 28px;
             margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #333;
             transition: all 0.3s ease;
             animation: fadeIn 0.5s ease-out forwards;
             opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #9b59b6;
         }
 
         .data-card:nth-child(1) {
@@ -89,8 +100,16 @@
             animation-delay: 0.2s;
         }
 
+        .data-card:nth-child(2)::before {
+            background-color: #3498db;
+        }
+
         .data-card:nth-child(3) {
             animation-delay: 0.3s;
+        }
+
+        .data-card:nth-child(3)::before {
+            background-color: #2ecc71;
         }
 
         @keyframes fadeIn {
@@ -100,48 +119,44 @@
         }
 
         .data-card:hover {
-            transform: translateX(10px);
-            border-color: rgba(240, 147, 251, 0.5);
-            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.2);
+            transform: translateX(8px);
+            border-color: #444;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .data-label {
-            font-size: 0.85rem;
-            color: #888;
+            font-size: 0.8rem;
+            color: #666;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
 
         .data-value {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #fff;
-        }
-
-        .icon-wrapper {
-            display: inline-block;
-            width: 40px;
-            font-size: 1.5rem;
         }
 
         .refresh-btn {
             display: inline-block;
-            padding: 15px 35px;
-            background: linear-gradient(135deg, #f093fb, #f5576c);
+            padding: 16px 40px;
+            background-color: #9b59b6;
             color: #fff;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
-            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.25);
+            margin-bottom: 25px;
         }
 
         .refresh-btn:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(155, 89, 182, 0.35);
+            background-color: #8e44ad;
         }
 
         .nav-links {
@@ -149,30 +164,32 @@
             gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .nav-links a {
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 22px;
+            background-color: #252525;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #333;
         }
 
         .nav-links a:hover {
-            background: rgba(240, 147, 251, 0.3);
-            border-color: #f093fb;
+            background-color: #9b59b6;
+            border-color: #9b59b6;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
 <body>
     <div class="container">
+
         <h1>Faker Demo</h1>
         <p class="subtitle">Mỗi lần tải lại trang sẽ hiển thị dữ liệu ngẫu nhiên mới!</p>
 

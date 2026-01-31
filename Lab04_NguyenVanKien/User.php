@@ -28,13 +28,13 @@ class User
     }
 }
 
-$user = new User("Nguyen Van A", "nguyenvana@gmail.com", "123456");
+$user = new User("Nguyen Van Kien", "nguyenvanakien@gmail.com", "123456");
 echo "Tên: " . $user->getName() . "<br>";
 echo "Email: " . $user->getEmail() . "<br>";
 echo "<hr>";
 echo "Test 1 - Đăng nhập đúng: ";
-echo $user->login("nguyenvana@gmail.com", "123456") . "<br>";
+echo $user->login("nguyenvanakien@gmail.com", "123456") . "<br>";
 echo "Test 2 - Sai email: ";
 echo $user->login("wrong@gmail.com", "123456") . "<br>";
 echo "Test 3 - Sai password: ";
-echo $user->login("nguyenvana@gmail.com", "wrongpass") . "<br>";
+echo $user->login("nguyenvanakien@gmail.com", "wrongpass") . "<br>";

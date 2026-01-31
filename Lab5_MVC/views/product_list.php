@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #141e30, #243b55);
+            background-color: #0f0f0f;
             min-height: 100vh;
             color: #fff;
             padding: 40px 20px;
@@ -44,33 +44,32 @@
             }
         }
 
+
+
         h1 {
             font-size: 3rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            color: #888;
+            color: #666;
             font-size: 1.1rem;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 25px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .product-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background-color: #1a1a1a;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #2a2a2a;
             overflow: hidden;
             transition: all 0.4s ease;
             animation: scaleIn 0.5s ease-out forwards;
@@ -104,7 +103,7 @@
         @keyframes scaleIn {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: scale(0.95);
             }
 
             to {
@@ -115,74 +114,85 @@
 
         .product-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(0, 198, 255, 0.5);
-            box-shadow: 0 20px 50px rgba(0, 198, 255, 0.2);
+            border-color: #3498db;
+            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.15);
         }
 
         .product-image {
             height: 180px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #252525;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
+            position: relative;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            height: 4px;
+            background-color: #3498db;
+            border-radius: 4px 4px 0 0;
         }
 
         .product-content {
-            padding: 25px;
+            padding: 28px;
         }
 
         .product-name {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #fff;
         }
 
         .product-description {
             font-size: 0.95rem;
-            color: #999;
-            margin-bottom: 15px;
-            line-height: 1.5;
+            color: #777;
+            margin-bottom: 18px;
+            line-height: 1.6;
         }
 
         .product-price {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #3498db;
         }
 
         .product-id {
             font-size: 0.8rem;
-            color: #666;
-            margin-top: 10px;
+            color: #555;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #2a2a2a;
         }
 
         .empty-state {
             text-align: center;
             padding: 80px 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
+            background-color: #1a1a1a;
+            border-radius: 24px;
+            border: 2px dashed #2a2a2a;
         }
 
         .empty-state .icon {
             font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.5;
+            margin-bottom: 25px;
+            opacity: 0.4;
         }
 
         .empty-state h2 {
             font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #888;
+            margin-bottom: 12px;
+            color: #666;
         }
 
         .empty-state p {
-            color: #666;
+            color: #555;
         }
 
         .nav-links {
@@ -193,20 +203,26 @@
         }
 
         .nav-links a {
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 14px 28px;
+            background-color: #1a1a1a;
             color: #fff;
             text-decoration: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 500;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #2a2a2a;
         }
 
         .nav-links a:hover {
-            background: rgba(0, 198, 255, 0.3);
-            border-color: #00c6ff;
+            background-color: #3498db;
+            border-color: #3498db;
             transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.25);
+        }
+
+        .nav-links a.primary {
+            background-color: #3498db;
+            border-color: #3498db;
         }
     </style>
 </head>
@@ -214,6 +230,7 @@
 <body>
     <div class="container">
         <header>
+
             <h1>Danh Sách Sản Phẩm</h1>
             <p class="subtitle">Dữ liệu được lấy từ Database (Lab 2)</p>
         </header>
@@ -222,8 +239,7 @@
             <div class="products-grid">
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
-                        <div class="product-image">
-                        </div>
+                        <div class="product-image"></div>
                         <div class="product-content">
                             <h3 class="product-name">
                                 <?php echo htmlspecialchars($product['name']); ?>
@@ -234,9 +250,7 @@
                             <div class="product-price">
                                 <?php echo number_format($product['price'], 0, ',', '.'); ?> VNĐ
                             </div>
-                            <div class="product-id">ID: #
-                                <?php echo $product['id']; ?>
-                            </div>
+                            <div class="product-id">ID: #<?php echo $product['id']; ?></div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -252,7 +266,7 @@
         <div class="nav-links">
             <a href="index.php?page=home">Trang Chủ</a>
             <a href="index.php?page=faker">Faker Demo</a>
-            <a href="index.php?page=products">Làm Mới</a>
+            <a href="index.php?page=products" class="primary">Làm Mới</a>
         </div>
     </div>
 </body>
