@@ -1,52 +1,34 @@
 <?php
-/**
- * Lab5 MVC - Router chính
- * 
- * File này làm nhiệm vụ:
- * - Bài 1: Load Faker và tạo dữ liệu giả
- * - Bài 2: Sử dụng PSR-4 Autoload
- * - Bài 3 & 4: Mini Router chuyển hướng đến Controller
- */
 
-// Load thư viện từ Composer
 require 'vendor/autoload.php';
 
-// Import các Controller
 use App\Controllers\HomeController;
 use App\Controllers\ProductController;
 use App\Models\Student;
 
-// Router siêu đơn giản
+// Router
 $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'home':
-        // Bài 3: Gọi HomeController
         $controller = new HomeController();
         $controller->index();
         break;
 
     case 'faker':
-        // Bài 1: Sử dụng Faker
         $faker = Faker\Factory::create('vi_VN');
-
-        // Tạo dữ liệu giả
         $name = $faker->name();
         $address = $faker->address();
         $email = $faker->email();
-
-        // Hiển thị View
         include 'views/faker.php';
         break;
 
     case 'products':
-        // Bài 4: Gọi ProductController lấy dữ liệu từ DB
         $controller = new ProductController();
         $controller->listProducts();
         break;
 
     case 'student':
-        // Bài 2: Test autoload namespace
         $student = new Student();
         echo "<h1>Test Autoload PSR-4</h1>";
         echo "<p>" . $student->getInfo() . "</p>";
@@ -54,7 +36,6 @@ switch ($page) {
         break;
 
     default:
-        // 404 - Page Not Found
         http_response_code(404);
         ?>
         <!DOCTYPE html>
