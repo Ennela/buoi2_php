@@ -81,8 +81,8 @@
         <h1>📞 Liên hệ với chúng tôi</h1>
 
         <div class="contact-info">
-            <p><strong>📧 Email:</strong> contact@laravel-lab.com</p>
-            <p><strong>📱 Điện thoại:</strong> 0123 456 789</p>
+            <p><strong>📧 Email:</strong> kien20377@gmail.com</p>
+            <p><strong>📱 Điện thoại:</strong> 0394680113</p>
             <p><strong>📍 Địa chỉ:</strong> Đại học Điện Lực, Hà Nội</p>
             <p><strong>⏰ Giờ làm việc:</strong> 8:00 - 17:00 (Thứ 2 - Thứ 6)</p>
         </div>
